@@ -149,7 +149,7 @@ class Record:
         frag = etree.XML(xml, parser=parser)
         parentN.append(frag)
 
-    def set_dateexif(self, *, path: str|Path) -> None:  
+    def set_dateexif(self, *, path: str | Path) -> None:
         """
         For a given path read Exif.Image.DateTime and add that date to the internal record.
 
@@ -159,19 +159,19 @@ class Record:
         """
         self.raise_if_not_multimedia()
         p = Path(path)
-        #dateDT = False
+        # dateDT = False
         try:
             img = PIL.Image.open(path)
         except:
             print("WARNING: Can't access exif info")
             # mtime = p.stat().st_mtime
         else:
-            exif = img.getexif() # returns exif object
+            exif = img.getexif()  # returns exif object
             try:
                 date_str = exif["Exif.Image.DateTime"]  # 2011:04:12 16:29:52
             except:
                 raise ValueError("no Exif.Image.DateTime")
-                #print("WARNING Dont find exif date time, using mtime")
+                # print("WARNING Dont find exif date time, using mtime")
                 # mtime = p.stat().st_mtime
             else:
                 dateDT = datetime.strptime(date_str, "%Y:%m:%d %H:%M:%S")
@@ -201,7 +201,7 @@ class Record:
         frag = etree.XML(xml, parser=parser)
         parentN.addnext(frag)
 
-    def set_filename(self, *, path: str) -> None:
+    def set_filename(self, *, path: str | Path) -> None:
         """
         deletes existing MulOriginalFileTxt, if any, and creates a new one
 
@@ -239,7 +239,7 @@ class Record:
         frag = etree.XML(xml, parser=parser)
         parentN.addnext(frag)
 
-    def set_size(self, *, path: str) -> None:
+    def set_size(self, *, path: str | Path) -> None:
         """
         Set the file size in KB.
         If size already exists in RIA, it gets overwritten.
